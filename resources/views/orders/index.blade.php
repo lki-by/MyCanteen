@@ -32,7 +32,6 @@
     </style>
 </head>
 <body class="bg-gray-100">
-    <!-- Navbar -->
     <nav class="text-white p-4 shadow-md" style="background: linear-gradient(135deg, #EB4E30 0%, #ff6b3d 100%);">
         <div class="container mx-auto flex justify-between items-center">
             <a href="/" class="text-xl font-bold flex items-center">
@@ -48,20 +47,11 @@
                              alt="Profile Picture">
                         <span class="ml-2">{{ Auth::user()->name }}</span>
                     </div>
-                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden" id="dropdown-menu">
-                        <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
-                        <a href="{{ route('user.orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Order</a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="container mx-auto py-8 px-4">
         <div class="max-w-6xl mx-auto">
             <!-- Header -->
@@ -203,7 +193,7 @@
             document.getElementById('dropdown-menu').classList.toggle('hidden');
         });
 
-        
+
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('dropdown-menu');
             const userMenu = document.getElementById('user-menu');

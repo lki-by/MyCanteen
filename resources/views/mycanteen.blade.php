@@ -3,829 +3,178 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>
-    MyCanteen
-    </title>
-<link rel="icon" type="image/png"  sizes="512x512"  href="{{ asset('logo/logo-tab.png') }}"  >
-
+  <title>MyCanteen</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('logo/logo-tab.png') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-:root {
-      --primary: #EB4E30;
-      --secondary: #ff9f1c;
-      --dark: #2b2d42;
-      --light: #f8f9fa;
-      --success: #2ecc71;
+    .cart-overlay {
+      transition: right 0.3s ease;
     }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-    }
-
-    /* Navbar */
-    .navbar {
-      background: linear-gradient(135deg, #EB4E30 0%, #ff6b3d 100%);
-      color: white;
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 12px rgba(238, 77, 45, 0.2);
-    }
-
-    .navbar h1 {
-      margin: 0;
-      font-size: 24px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-
-    .navbar img {
-      height: 40px;
-      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
-    }
-
-    .user-cart {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-left: auto;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .user-info:hover {
-      transform: translateY(-2px);
-    }
-
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: white;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      border: 2px solid white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-
-    .cart-icon {
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .cart-icon:hover {
-      transform: translateY(-2px);
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--secondary);
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: bold;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
-
-    /* Rest of your existing CSS remains the same */
-    /* ... */
-
-    /* Updated Avatar Image Style */
-    .user-avatar-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    /* Add smooth transition to navbar */
-    .navbar {
-      transition: all 0.3s ease;
-    }
-
-    /* Add slight scale effect on avatar hover */
-    .user-avatar:hover {
-      transform: scale(1.05);
-    }
-
-
-    /* Kategori */
-    .kategori {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin: 20px 0;
-      padding: 0 20px;
-      flex-wrap: wrap;
-    }
-
-    .kategori button {
-      padding: 10px 20px;
-      border: none;
-      background-color: #fff;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-
-    .kategori button.active,
-    .kategori button:hover {
-      background-color: var(--primary);
-      color: #fff;
-    }
-
-    /* Produk Container */
-    .produk-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-      padding: 0 20px 40px;
-    }
-
-    .produk {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .produk:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .produk-rating {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: var(--success);
-      color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
-
-    .produk img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 12px;
-    }
-
-    .produk h3 {
-      font-size: 16px;
-      margin: 0 0 8px;
-      color: var(--dark);
-    }
-
-    .produk-price {
-      color: var(--primary);
-      font-weight: bold;
-      font-size: 18px;
-      margin: 8px 0;
-    }
-
-    .produk-category {
-      display: inline-block;
-      background: #f0f0f0;
-      color: #666;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      margin-bottom: 12px;
-    }
-
-    .add-to-cart {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-      width: 100%;
-      transition: background 0.3s ease;
-    }
-    .produk {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.produk img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  background: #f5f5f5;
-}
-
-.produk-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 8px;
-}
-
-.produk h3 {
-  font-size: 16px;
-  margin: 0 0 8px;
-  color: var(--dark);
-  line-height: 1.3;
-  min-height: 40px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.produk-category {
-  display: inline-block;
-  background: #f0f0f0;
-  color: #666;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-bottom: 12px;
-  align-self: flex-start;
-}
-
-.produk-price {
-  color: var(--primary);
-  font-weight: bold;
-  font-size: 18px;
-  margin: 8px 0 16px;
-}
-
-.add-to-cart {
-  margin-top: auto;
-}
-
-    .add-to-cart:hover {
-      background: #d14326;
-    }
-
-    /* Popup Detail Produk */
     .popup-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
       transition: all 0.3s ease;
     }
-
-    .popup-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
     .popup-container {
-      background: white;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 500px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 24px;
-      position: relative;
-      transform: translateY(20px);
       transition: transform 0.3s ease;
     }
-
-    .popup-overlay.active .popup-container {
-      transform: translateY(0);
+    .profile-dropdown {
+      display: none;
     }
-
-    .popup-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: #666;
-    }
-
-    .popup-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-
-    .popup-title {
-      font-size: 24px;
-      margin: 0 0 8px;
-      color: var(--dark);
-    }
-
-    .popup-rating {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      color: #ffc107;
-      margin-bottom: 8px;
-    }
-
-    .popup-price {
-      font-size: 24px;
-      color: var(--primary);
-      font-weight: bold;
-      margin: 12px 0;
-    }
-
-    .popup-category {
-      display: inline-block;
-      background: #f0f0f0;
-      color: #666;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
-
-    .popup-description {
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-
-    .popup-actions {
-      display: flex;
-      gap: 12px;
-    }
-
-    .popup-btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .popup-btn-primary {
-      background: var(--primary);
-      color: white;
-      border: none;
-    }
-
-    .popup-btn-primary:hover {
-      background: #d14326;
-    }
-
-    .popup-btn-secondary {
-      background: white;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-    }
-
-    .popup-btn-secondary:hover {
-      background: #ffeeea;
-    }
-
-    /* Cart Sidebar */
-    .cart-overlay {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 100%;
-      max-width: 400px;
-      height: 100vh;
-      background: white;
-      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-      z-index: 1000;
-      transition: right 0.3s ease;
-      overflow-y: auto;
-    }
-
-    .cart-overlay.active {
-      right: 0;
-    }
-
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .cart-title {
-      margin: 0;
-      font-size: 20px;
-    }
-
-    .cart-close {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .cart-items {
-      padding: 20px;
-    }
-
-    .cart-item {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .cart-item-img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .cart-item-details {
-      flex: 1;
-    }
-
-    .cart-item-name {
-      margin: 0 0 8px;
-      font-size: 16px;
-    }
-
-    .cart-item-price {
-      color: var(--primary);
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .cart-item-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .cart-item-qty {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .qty-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #f0f0f0;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .qty-value {
-      min-width: 20px;
-      text-align: center;
-    }
-
-    .remove-item {
-      background: none;
-      border: none;
-      color: #ff6b6b;
-      cursor: pointer;
-      margin-left: auto;
-    }
-
-    .cart-footer {
-      padding: 20px;
-      border-top: 1px solid #eee;
-    }
-
-    .cart-total {
-      display: flex;
-      justify-content: space-between;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-
-    .checkout-btn {
-      width: 100%;
-      padding: 14px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .checkout-btn:hover {
-      background: #d14326;
-    }
-
-    .empty-cart {
-      text-align: center;
-      padding: 40px 20px;
-      color: #666;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .produk-container {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      }
-
-      .popup-container {
-        width: 95%;
-        padding: 16px;
-      }
-
-      .popup-actions {
-        flex-direction: column;
-      }
-
-      .cart-overlay {
-        max-width: 100%;
-      }
-    }
-    /* Navbar Search */
-.navbar-search-container {
-  flex: 1;
-  max-width: 500px;
-  margin: 0 20px;
-  position: relative;
-  margin-left:225px;
-}
-
-.navbar-search-input {
-  width: 100%;
-  padding: 10px 10px;
-  padding-right: 1px;
-  font-size: 14px;
-  border: none;
-  border-radius: 30px;
-  outline: none;
-  background: rgba(255,255,255,0.9);
-  transition: all 0.3s ease;
-  color: var(--dark);
-}
-
-.navbar-search-input:focus {
-  background: white;
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.3);
-}
-
-.navbar-search-button {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--primary);
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.navbar-search-button:hover {
-  background: #d14326;
-}
-
-.search-icon {
-  color: white;
-  width: 16px;
-  height: 16px;
-}
-
-@media (max-width: 1024px) {
-  .navbar-search-container {
-    max-width: 400px;
-    margin: 0 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar-search-container {
-    order: 3;
-    width: 100%;
-    max-width: 100%;
-    margin: 10px 0 0 0;
-    display: none; /* Hidden by default on mobile */
-  }
-
-  .navbar-search-input {
-    padding: 8px 15px;
-    padding-right: 40px;
-  }
-
-  .navbar-search-button {
-    width: 30px;
-    height: 30px;
-  }
-
-  /* Optional: Add a search icon to toggle search on mobile */
-  .mobile-search-toggle {
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    .mobile-search-toggle {
-      display: flex;
-      margin-right: 15px;
-    }
-
-    .navbar-search-container.active {
+    .profile-dropdown.active {
       display: block;
     }
-  }
-}
-
-.produk[style*="display: none"] {
-  display: none !important;
-}
- .text-3d {
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3), -2px -2px 4px rgba(255,255,255,0.8);
-  }
-
   </style>
 </head>
 
+<body class="bg-gray-100 font-sans text-gray-800">
 
-<body>
-  <div class="navbar">
-    <h1>
-      <img src="{{ asset('logo/Logo.png') }}" alt="MyCanteen" class="w-48 h-auto mb-2" >
-       MyCanteen
-    </h1>
-    <div class="navbar-search-container">
-      <input type="text" id="search-input" class="navbar-search-input" placeholder="Cari menu makanan...">
-      <button class="navbar-search-button">
-        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
+  <nav class="sticky top-0 z-50 flex flex-col sm:flex-row items-center justify-between p-4 bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg">
+    <div class="flex items-center space-x-2 w-full sm:w-auto justify-between sm:justify-start mb-3 sm:mb-0">
+      <div class="flex items-center space-x-2">
+        <img src="{{ asset('logo/Logo.png') }}" alt="MyCanteen" class="w-10 h-10 sm:w-12 sm:h-12">
+        <h1 class="text-lg sm:text-xl font-bold">MyCanteen</h1>
+      </div>
+    </div>
+
+    <div class="hidden sm:block sm:flex-1 sm:max-w-xl mx-4 relative">
+      <input type="text" id="search-input" class="w-full py-2 px-4 rounded-full bg-white bg-opacity-90 focus:bg-white focus:ring-2 focus:ring-white focus:ring-opacity-30 text-black" placeholder="Cari menu makanan...">
+      <button class="absolute right-1 top-1/2 transform -translate-y-1/2 bg-red-500 rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600">
+        <i class="fas fa-search text-white text-sm"></i>
       </button>
     </div>
 
-    <div class="user-cart">
-        @if (!Auth::user()->hasVerifiedEmail())
-            <a href="{{ route('verification.send') }}">Send email</a>
-        @endif
-      <a href="{{ route('profile.edit') }}" class="user-info" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-        <div class="user-avatar">
-          <img
-            src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&color=7F9CF5&background=EBF4FF' }}"
-            alt="Avatar"
-            class="user-avatar-img"
-          />
-        </div>
-        <span>{{ Auth::user()->name }}</span>
-      </a>
+    <div class="flex items-center space-x-4 sm:space-x-6">
 
-      <div class="cart-icon" onclick="openCart()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <div class="cart-count" id="cartCount">0</div>
+      <div class="relative">
+        <button onclick="toggleProfileDropdown()" class="flex items-center space-x-2 hover:translate-y-[-2px] transition-transform focus:outline-none">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border-2 border-white shadow-md overflow-hidden">
+            <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&color=7F9CF5&background=EBF4FF' }}"
+                 alt="Avatar" class="w-full h-full object-cover">
+          </div>
+          <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
+          <i class="fas fa-chevron-down text-xs hidden sm:inline"></i>
+        </button>
+
+        <div id="profileDropdown" class="profile-dropdown absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 py-1">
+          <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <i class="fas fa-user mr-2"></i> My Profile
+          </a>
+          <a href="{{ route('user.orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <i class="fas fa-clipboard-list mr-2"></i> Orders
+          </a>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </button>
+          </form>
+        </div>
       </div>
+
+      <button onclick="openCart()" class="relative hover:translate-y-[-2px] transition-transform">
+        <i class="fas fa-shopping-cart text-lg sm:text-xl"></i>
+        <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+      </button>
     </div>
+  </nav>
+
+  <!-- Category Filter - Perbaikan untuk mobile -->
+  <div class="flex flex-wrap gap-2 sm:gap-4 my-3 sm:my-5 px-2 sm:px-4 justify-center" id="categoryFilter">
+    <button data-category="all" class="category-btn px-3 py-1 sm:px-4 sm:py-2 rounded-full border-2 border-red-500 font-bold text-red-500 hover:bg-red-500 hover:text-white transition-colors active">Semua</button>
+    <button data-category="Makanan" class="category-btn px-3 py-1 sm:px-4 sm:py-2 rounded-full border-2 border-red-500 font-bold text-red-500 hover:bg-red-500 hover:text-white transition-colors">Makanan</button>
+    <button data-category="Minuman" class="category-btn px-3 py-1 sm:px-4 sm:py-2 rounded-full border-2 border-red-500 font-bold text-red-500 hover:bg-red-500 hover:text-white transition-colors">Minuman</button>
+    <button data-category="Snack" class="category-btn px-3 py-1 sm:px-4 sm:py-2 rounded-full border-2 border-red-500 font-bold text-red-500 hover:bg-red-500 hover:text-white transition-colors">Snack</button>
   </div>
 
-  <div class="kategori">
-    <button class="active" data-category="all">Semua</button>
-    <button data-category="Makanan">Makanan</button>
-    <button data-category="Minuman">Minuman</button>
-    <button data-category="Snack">Snack</button>
-</div>
-
-  <div class="produk-container" id="produkContainer">
+  <!-- Product Grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 px-2 sm:px-4 pb-6 sm:pb-8">
     @foreach ($menus as $menu)
     @if($menu->kategori)
-    <div class="produk"
+    <div class="product-item bg-white rounded-lg sm:rounded-xl shadow-sm sm:shadow-md overflow-hidden hover:shadow-md sm:hover:shadow-lg transition-shadow cursor-pointer flex flex-col h-full"
          onclick="showProductPopup({{ $menu->id }}, '{{ $menu->nm_menu }}', {{ $menu->harga }}, '{{ $menu->kategori->nm_kategori }}', 4.4, '{{ $menu->deskripsi ?? 'Tidak ada deskripsi' }}', '{{ $menu->gambar ? asset('storage/' . $menu->gambar) : 'https://via.placeholder.com/150' }}')"
-         data-category="{{ $menu->kategori->nm_kategori }}">
-      <div class="produk-rating">
-        <span>{{ $menu->Rating}}</span>
+         data-category="{{ $menu->kategori->nm_kategori }}"
+         data-name="{{ strtolower($menu->nm_menu) }}">
+      <div class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded flex items-center">
+        <span>{{ $menu->Rating }}</span>
       </div>
       <img src="{{ $menu->gambar ? asset('storage/' . $menu->gambar) : 'https://via.placeholder.com/150' }}"
            alt="{{ $menu->nm_menu }}"
+           class="w-full h-32 sm:h-40 object-cover"
            onerror="this.src='https://via.placeholder.com/150'">
-      <div class="produk-content">
-        <h3>{{ $menu->nm_menu }}</h3>
-        <span class="produk-category">{{ $menu->kategori->nm_kategori }}</span>
-        <p class="produk-price">Rp {{ number_format($menu->harga, 0, ',', '.') }}</p>
+      <div class="p-2 sm:p-4 flex flex-col flex-grow">
+        <h3 class="font-semibold text-gray-800 text-sm sm:text-base mb-1 sm:mb-2 line-clamp-2">{{ $menu->nm_menu }}</h3>
+        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded self-start mb-2 sm:mb-3">{{ $menu->kategori->nm_kategori }}</span>
+        <p class="text-red-500 font-bold text-base sm:text-lg mb-3 sm:mb-4">Rp {{ number_format($menu->harga, 0, ',', '.') }}</p>
+        <button class="mt-auto bg-red-500 hover:bg-red-600 text-white text-sm sm:text-base py-1 sm:py-2 px-3 sm:px-4 rounded-full transition-colors"
+                onclick="event.stopPropagation();addToCart({{ $menu->id }}, {{ $menu->harga }}, '{{ $menu->gambar ? asset('storage/' . $menu->gambar) : 'https://via.placeholder.com/150' }}', '{{ $menu->nm_menu }}')">
+          Add To Cart
+        </button>
       </div>
-      <button class="add-to-cart"
-              onclick="event.stopPropagation();addToCart({{ $menu->id }}, {{ $menu->harga }}, '{{ $menu->gambar ? asset('storage/' . $menu->gambar) : 'https://via.placeholder.com/150' }}', '{{ $menu->nm_menu }}')">
-        Add To Cart
-      </button>
     </div>
     @endif
     @endforeach
-</div>
+  </div>
 
-<div class="popup-overlay" id="productPopup">
-  <div class="popup-container">
-    <button class="popup-close" onclick="closePopup()">&times;</button>
-    <img src="" alt="" class="popup-img" id="popupImg">
-    <h2 class="popup-title" id="popupTitle"></h2>
-    <div class="popup-rating" id="popupRating"></div>
-    <div class="popup-category" id="popupCategory"></div>
-    <p class="popup-price" id="popupPrice"></p>
-    <p class="popup-description" id="popupDescription"></p>
-    <div class="popup-actions">
-      <button class="popup-btn popup-btn-primary" onclick="addToCartFromPopup()">Add to Cart</button>
+  <div id="productPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 invisible transition-opacity z-50">
+    <div class="bg-white rounded-xl w-full max-w-xs sm:max-w-md max-h-[90vh] overflow-y-auto transform translate-y-5 mx-2 sm:mx-0">
+      <div class="p-4 sm:p-6 relative">
+        <button onclick="closePopup()" class="absolute top-2 sm:top-4 right-2 sm:right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        <img id="popupImg" src="" alt="" class="w-full h-40 sm:h-48 object-cover rounded-lg mb-3 sm:mb-4">
+        <h2 id="popupTitle" class="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"></h2>
+        <div id="popupRating" class="flex items-center text-yellow-500 mb-1 sm:mb-2"></div>
+        <span id="popupCategory" class="inline-block bg-gray-100 text-gray-600 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full mb-2 sm:mb-3"></span>
+        <p id="popupPrice" class="text-red-500 font-bold text-xl sm:text-2xl my-2 sm:my-3"></p>
+        <p id="popupDescription" class="text-gray-600 text-sm sm:text-base mb-4 sm:mb-6"></p>
+        <button onclick="addToCartFromPopup()" class="w-full bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-bold transition-colors text-sm sm:text-base">
+          Add to Cart
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
-
-
-  <div class="cart-overlay" id="cartSidebar">
-    <div class="cart-header">
-      <h3 class="cart-title">Keranjang Belanja</h3>
-      <button class="cart-close" onclick="closeCart()">&times;</button>
+  <div id="cartSidebar" class="fixed top-0 right-[-100%] w-full max-w-xs sm:max-w-md h-full bg-white shadow-lg z-50 overflow-y-auto">
+    <div class="p-3 sm:p-4 border-b flex justify-between items-center">
+      <h3 class="text-lg sm:text-xl font-bold">Keranjang Belanja</h3>
+      <button onclick="closeCart()" class="text-gray-500 hover:text-gray-700 text-xl sm:text-2xl">&times;</button>
     </div>
-    <div class="cart-items" id="cartItems">
-      <div class="empty-cart">Keranjang belanja kosong</div>
+
+    <div id="cartItems" class="p-3 sm:p-4">
+      <div class="text-center py-8 sm:py-10 text-gray-500">Keranjang belanja kosong</div>
     </div>
-    <div class="cart-footer" id="cartFooter" style="display: none;">
-      <div class="cart-total">
-        <span>Total:</span>
-        <span id="cartTotal">Rp 0</span>
+
+    <div id="cartFooter" class="p-3 sm:p-4 border-t hidden">
+      <div class="flex justify-between items-center mb-3 sm:mb-4">
+        <span class="font-bold text-base sm:text-lg">Total:</span>
+        <span id="cartTotal" class="font-bold text-base sm:text-lg">Rp 0</span>
       </div>
-      <button class="checkout-btn" onclick="checkout()">Checkout</button>
+      <button onclick="checkout()" class="w-full bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-bold transition-colors text-sm sm:text-base">
+        Checkout
+      </button>
     </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      updateCartCount();
-      updateCartDisplay();
+    // Profile dropdown function
+    function toggleProfileDropdown() {
+      const dropdown = document.getElementById('profileDropdown');
+      dropdown.classList.toggle('active');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const dropdown = document.getElementById('profileDropdown');
+      const profileBtn = document.querySelector('[onclick="toggleProfileDropdown()"]');
+
+      if (!profileBtn.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.classList.remove('active');
+      }
     });
 
-    // Product Popup Functions
     function showProductPopup(menu_id, name, price, category, rating, description, image) {
       document.getElementById('popupTitle').textContent = name;
       document.getElementById('popupPrice').textContent = 'Rp ' + price.toLocaleString('id-ID');
       document.getElementById('popupCategory').textContent = category;
-      document.getElementById('popupRating').innerHTML = `<span>{{{ $menu->Rating}}}</span>`;
+      document.getElementById('popupRating').innerHTML = `<span>${rating}</span>`;
       document.getElementById('popupDescription').textContent = description;
       document.getElementById('popupImg').src = image;
 
@@ -836,12 +185,14 @@
         image
       };
 
-      document.getElementById('productPopup').classList.add('active');
+      document.getElementById('productPopup').classList.remove('invisible', 'opacity-0');
+      document.getElementById('productPopup').classList.add('visible', 'opacity-100');
       document.body.style.overflow = 'hidden';
     }
 
     function closePopup() {
-      document.getElementById('productPopup').classList.remove('active');
+      document.getElementById('productPopup').classList.remove('visible', 'opacity-100');
+      document.getElementById('productPopup').classList.add('invisible', 'opacity-0');
       document.body.style.overflow = 'auto';
     }
 
@@ -851,7 +202,7 @@
       closePopup();
     }
 
-    // Cart Functions
+    // Cart Functions (remain the same as before)
     async function addToCart(menu_id, price, image, name) {
       try {
         const _token = "{{ csrf_token() }}";
@@ -903,12 +254,12 @@
         const cartFooterElement = document.getElementById('cartFooter');
 
         if (cartItems.length === 0) {
-          cartItemsElement.innerHTML = '<div class="empty-cart">Keranjang belanja kosong</div>';
-          cartFooterElement.style.display = 'none';
+          cartItemsElement.innerHTML = '<div class="text-center py-8 sm:py-10 text-gray-500">Keranjang belanja kosong</div>';
+          cartFooterElement.classList.add('hidden');
           return;
         }
 
-        cartFooterElement.style.display = 'block';
+        cartFooterElement.classList.remove('hidden');
 
         let itemsHTML = '';
         let total = 0;
@@ -917,20 +268,20 @@
           total += item.total;
 
           itemsHTML += `
-            <div class="cart-item">
+            <div class="flex gap-3 sm:gap-4 pb-3 sm:pb-4 mb-3 sm:mb-4 border-b">
               <img src="${item.menu.gambar ? '{{ asset('storage') }}/' + item.menu.gambar : 'https://via.placeholder.com/150'}"
                    alt="${item.menu.nm_menu}"
-                   class="cart-item-img">
-              <div class="cart-item-details">
-                <h4 class="cart-item-name">${item.menu.nm_menu}</h4>
-                <p class="cart-item-price">Rp ${item.menu.harga.toLocaleString('id-ID')}</p>
-                <div class="cart-item-actions">
-                  <div class="cart-item-qty">
-                    <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-                    <span class="qty-value">${item.quantity}</span>
-                    <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                   class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg">
+              <div class="flex-1">
+                <h4 class="font-medium text-sm sm:text-base">${item.menu.nm_menu}</h4>
+                <p class="text-red-500 font-bold text-sm sm:text-base">Rp ${item.menu.harga.toLocaleString('id-ID')}</p>
+                <div class="flex items-center gap-2 sm:gap-3 mt-1 sm:mt-2">
+                  <div class="flex items-center gap-1 sm:gap-2">
+                    <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 text-xs sm:text-sm">-</button>
+                    <span class="w-4 sm:w-5 text-center text-sm sm:text-base">${item.quantity}</span>
+                    <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 text-xs sm:text-sm">+</button>
                   </div>
-                  <button class="remove-item" onclick="removeItem(${item.id})">Hapus</button>
+                  <button onclick="removeItem(${item.id})" class="ml-auto text-red-500 hover:text-red-700 text-xs sm:text-sm">Hapus</button>
                 </div>
               </div>
             </div>
@@ -1038,61 +389,76 @@
 
     // UI Functions
     function openCart() {
-      document.getElementById('cartSidebar').classList.add('active');
+      document.getElementById('cartSidebar').classList.remove('right-[-100%]');
+      document.getElementById('cartSidebar').classList.add('right-0');
       document.body.style.overflow = 'hidden';
       updateCartDisplay();
     }
 
     function closeCart() {
-      document.getElementById('cartSidebar').classList.remove('active');
+      document.getElementById('cartSidebar').classList.remove('right-0');
+      document.getElementById('cartSidebar').classList.add('right-[-100%]');
       document.body.style.overflow = 'auto';
     }
 
-    document.querySelectorAll('.kategori button').forEach(button => {
-  button.addEventListener('click', function() {
+    // Perbaikan untuk filter kategori di mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCartCount();
+      updateCartDisplay();
 
-    document.querySelectorAll('.kategori button').forEach(btn => btn.classList.remove('active'));
+      // Event delegation untuk filter kategori (bekerja di mobile dan desktop)
+      document.getElementById('categoryFilter').addEventListener('click', function(e) {
+        if (e.target.classList.contains('category-btn')) {
+          document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+          e.target.classList.add('active');
 
-
-    this.classList.add('active');
-
-
-    const category = this.dataset.category;
-
-
-    filterProductsByCategory(category);
-  });
-});
-
-
-    // Search Functionality
-    document.getElementById("search-input").addEventListener("input", function() {
-      const keyword = this.value.toLowerCase();
-      const products = document.querySelectorAll(".produk");
-
-      products.forEach(function(produk) {
-        const title = produk.querySelector("h3").textContent.toLowerCase();
-        if (title.includes(keyword)) {
-          produk.style.display = "block";
-        } else {
-          produk.style.display = "none";
+          const category = e.target.dataset.category.toLowerCase();
+          filterProducts(category);
         }
+      });
+
+      // Add data-name attribute to all product items for search
+      document.querySelectorAll('.product-item').forEach(item => {
+        const name = item.querySelector('h3').textContent.toLowerCase();
+        item.setAttribute('data-name', name);
       });
     });
 
-    function filterProductsByCategory(category) {
-  const products = document.querySelectorAll('.produk');
+    // Fungsi filterProducts dan lainnya tetap sama
+    function filterProducts(category = null, searchKeyword = null) {
+      const products = document.querySelectorAll('.product-item');
+      const activeCategory = category || document.querySelector('.category-btn.active')?.dataset.category.toLowerCase() || 'all';
+      const keyword = searchKeyword || document.getElementById('search-input')?.value.toLowerCase() || '';
 
-  products.forEach(product => {
-    if (category === 'all') {
-      product.style.display = 'block';
-    } else {
-      const productCategory = product.dataset.category.toLowerCase();
-      product.style.display = productCategory === category.toLowerCase() ? 'block' : 'none';
+      products.forEach(product => {
+        const productCategory = product.dataset.category.toLowerCase();
+        const productName = product.dataset.name;
+
+        const categoryMatch = activeCategory === 'all' || productCategory === activeCategory;
+        const searchMatch = keyword === '' || productName.includes(keyword);
+
+        if (categoryMatch && searchMatch) {
+          product.style.display = 'flex';
+        } else {
+          product.style.display = 'none';
+        }
+      });
     }
-  });
-}
 
+    document.getElementById("search-input").addEventListener("input", function() {
+      const keyword = this.value.toLowerCase();
+      filterProducts(null, keyword);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCartCount();
+      updateCartDisplay();
+
+      document.querySelectorAll('.product-item').forEach(item => {
+        const name = item.querySelector('h3').textContent.toLowerCase();
+        item.setAttribute('data-name', name);
+      });
+    });
   </script>
 </body>
 </html>

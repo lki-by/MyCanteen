@@ -20,7 +20,6 @@
         </div>
     </nav>
 
-    <!-- Create Form -->
     <div class="container mx-auto mt-10 max-w-2xl">
         <div class="bg-white p-8 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold mb-6 text-red-500">Tambah Menu</h2>
@@ -37,6 +36,17 @@
                     <label class="block text-gray-700">Harga:</label>
                     <input type="number" name="harga" required
                            class="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-pink-300">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Kategori:</label>
+                    <select name="kategori_id" required
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-pink-300">
+                        <option value="">Pilih Kategori</option>
+                        @foreach($kategoris as $kategori)
+                            <option value="{{ $kategori->id }}">{{ $kategori->nm_kategori }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-4">

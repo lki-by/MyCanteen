@@ -30,7 +30,7 @@ class AuthController extends Controller
 
 
     return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
-}
+    }
 
 
     public function showLogin()

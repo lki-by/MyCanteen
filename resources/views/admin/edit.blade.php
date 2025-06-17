@@ -10,7 +10,6 @@
 </head>
 <body class="bg-gray-100">
 
-   
     <nav class="text-white p-4 shadow-md" style="background: linear-gradient(135deg, #EB4E30 0%, #ff6b3d 100%);">
         <div class="container mx-auto flex justify-between items-center">
             <a href="/" class="text-xl font-bold flex items-center">
@@ -19,7 +18,6 @@
             </a>
         </div>
     </nav>
-
 
     <div class="container mx-auto mt-10 max-w-2xl">
         <div class="bg-white p-8 rounded-lg shadow-md">
@@ -38,6 +36,18 @@
                     <label class="block text-gray-700">Harga:</label>
                     <input type="number" name="harga" value="{{ $menu->harga }}" required
                            class="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-pink-300">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Kategori:</label>
+                    <select name="kategori_id" required
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-pink-300">
+                        @foreach($kategoris as $kategori)
+                            <option value="{{ $kategori->id }}" {{ $menu->kategori_id == $kategori->id ? 'selected' : '' }}>
+                                {{ $kategori->nm_kategori }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-4">

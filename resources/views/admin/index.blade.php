@@ -47,7 +47,7 @@
                              src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&color=7F9CF5&background=EBF4FF' }}"
                              alt="Profile Picture">
                         <span class="ml-2">{{ Auth::user()->name }}</span>
-                    </div>
+                    </div> 
                     <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden" id="dropdown-menu">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -146,7 +146,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     @if($menus->hasPages())
                     <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                         <div class="flex-1 flex justify-between sm:hidden">

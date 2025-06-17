@@ -25,23 +25,15 @@
                              alt="Profile Picture">
                         <span class="ml-2">{{ Auth::user()->name }}</span>
                     </div>
-                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden" id="dropdown-menu">
-                        <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
-                        <a href="{{ route('user.orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Order</a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
+
     <div class="container mx-auto py-8 px-4">
         <div class="max-w-6xl mx-auto">
-            <!-- Header -->
+
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">Order Details #{{ $transaction->id }}</h1>
@@ -54,7 +46,7 @@
                 </div>
             </div>
 
-            <!-- Order Summary Card -->
+
             <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Order Summary</h3>
@@ -86,7 +78,7 @@
                 </div>
             </div>
 
-            <!-- Order Items -->
+            
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900">Order Items</h3>

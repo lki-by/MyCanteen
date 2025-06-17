@@ -8,18 +8,14 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    /**
-     * Menampilkan form edit profil
-     */
+
     public function edit()
     {
         $user = Auth::user();
         return view('profile.edit', compact('user'));
     }
 
-    /**
-     * Mengupdate data profil
-     */
+
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -40,8 +36,6 @@ class ProfileController extends Controller
             if ($user->avatar) {
                 Storage::disk('public')->delete($user->avatar);
             }
-
-           
             $path = $request->file('avatar')->store('avatars', 'public');
             $user->avatar = $path;
         }
@@ -52,18 +46,15 @@ class ProfileController extends Controller
             ->with('success', 'Profil berhasil diperbarui!');
     }
 
-    /**
-     * Menghapus avatar profil
-     */
     public function destroyAvatar()
     {
         $user = Auth::user();
 
         if ($user->avatar) {
-            // Hapus file dari storage
+
             Storage::disk('public')->delete($user->avatar);
 
-            // Hapus referensi di database
+
             $user->avatar = null;
             $user->save();
         }

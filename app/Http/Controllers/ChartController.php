@@ -17,7 +17,7 @@ class ChartController extends Controller
             'quantity' => 'required|integer|min:1'
         ]);
 
-        
+
         $cartItem = Chart::where('user_id', Auth::id())
                         ->where('menu_id', $request->menu_id)
                         ->whereHas('transaksi', function($query) {
@@ -26,7 +26,6 @@ class ChartController extends Controller
                         ->first();
 
         if ($cartItem) {
-
             $cartItem->quantity += $request->quantity;
             $cartItem->total = $cartItem->quantity * $request->price;
             $cartItem->save();

@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="min-h-screen">
-        <!-- Navbar (Updated) --><nav class="text-white p-4 shadow-md" style="background: linear-gradient(135deg, #EB4E30 0%, #ff6b3d 100%); ">
+       <nav class="text-white p-4 shadow-md" style="background: linear-gradient(135deg, #EB4E30 0%, #ff6b3d 100%); ">
     <div class="container mx-auto flex justify-between items-center">
         <a href="/" class="text-xl font-bold flex items-center">
             <img src="{{ asset('logo/Logo.png') }}" alt="MyCanteen" class="h-8 mr-2">
@@ -25,21 +25,13 @@
                          alt="Profile Picture">
                     <span class="ml-2">{{ Auth::user()->name }}</span>
                 </div>
-                <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden" id="dropdown-menu">
-                    <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
-                    <a href="{{ route('user.orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Order</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
 </nav>
 
 
-        <!-- Main Content -->
+
         <div class="container mx-auto py-8 px-4">
             <div class="max-w-4xl mx-auto">
                 <h1 class="text-2xl font-bold text-gray-800 mb-6">My Profil</h1>
@@ -49,7 +41,7 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Profile Photo -->
+
                         <div class="mb-8">
                             <div class="flex items-center space-x-6">
                                 <div class="shrink-0">
@@ -84,7 +76,7 @@
                             </div>
                         </div>
 
-                        <!-- Name -->
+
                         <div class="mb-6">
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
                             <input type="text" name="name" id="name" value="{{ old('name', Auth::user()->name) }}"
@@ -94,7 +86,7 @@
                             @enderror
                         </div>
 
-                        <!-- Email -->
+
                         <div class="mb-6">
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                             <input type="email" name="email" id="email" value="{{ old('email', Auth::user()->email) }}"
@@ -102,7 +94,7 @@
                             <p class="mt-1 text-xs text-gray-500">Email tidak dapat diubah</p>
                         </div>
 
-                        <!-- Phone Number -->
+
                         <div class="mb-6">
                             <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Nomor HP</label>
                             <input type="tel" name="phone" id="phone" value="{{ old('phone', Auth::user()->phone) }}"
@@ -113,7 +105,7 @@
                             @enderror
                         </div>
 
-                        <!-- Submit Button -->
+
                         <div class="flex justify-end mt-8">
                             <a href="/mycanteen" class="px-4 py-2 bg-gray-300 text-gray-800 text-sm font-medium rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mr-3">
                                 Back
@@ -126,7 +118,7 @@
                         </div>
                     </form>
 
-                    <!-- Delete Avatar Form (hidden) -->
+
                     @if(Auth::user()->avatar)
                     <form id="delete-avatar-form" method="POST" action="{{ route('profile.avatar.destroy') }}" class="hidden">
                         @csrf
@@ -139,27 +131,26 @@
     </div>
 
     <script>
-        // Preview avatar when selected and update navbar profile picture
-        document.getElementById('avatar').addEventListener('change', function(event) {
+
+        document.getElementById('avatar').addEventListener('change', (event)  => {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    // Update preview in form
+
                     document.getElementById('preview-avatar').src = e.target.result;
-                    // Update avatar in navbar
+
                     document.getElementById('current-avatar').src = e.target.result;
                 }
                 reader.readAsDataURL(file);
             }
         });
 
-        // Toggle dropdown menu
         document.getElementById('user-menu').addEventListener('click', function() {
             document.getElementById('dropdown-menu').classList.toggle('hidden');
         });
 
-        // Close dropdown when clicking outside
+
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('dropdown-menu');
             const userMenu = document.getElementById('user-menu');
@@ -168,7 +159,6 @@
             }
         });
 
-        // Confirm delete avatar
         function confirmDeleteAvatar() {
             if (confirm('Apakah Anda yakin ingin menghapus foto profil?')) {
                 document.getElementById('delete-avatar-form').submit();

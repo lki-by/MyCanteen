@@ -32,7 +32,6 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-
 Route::prefix('admin')->group(function () {
     Route::get('/menus', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/menus/create', [AdminController::class, 'create'])->name('admin.create');
@@ -57,35 +56,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/mycanteen/add', [ChartController::class, 'addToCart'])->name('cart.add');
     Route::post('/mycanteen/update', [ChartController::class, 'updateCartItem'])->name('cart.update');
     Route::post('/mycanteen/remove', [ChartController::class, 'removeCartItem'])->name('cart.remove');
-    Route::get('/mycanteen/items', [ChartController::class, 'getCartItems'])->name('cart.items'); // Diperbaiki dari mycanten ke mycanteen
+    Route::get('/mycanteen/items', [ChartController::class, 'getCartItems'])->name('cart.items');
     Route::get('/mycanteen/count', [ChartController::class, 'getCartCount'])->name('cart.count');
     Route::post('/checkout', [ChartController::class, 'processCheckout'])->name('checkout.process');
 });
 
-Route::prefix('user')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/orders', [\App\Http\Controllers\User\OrderController::class, 'index'])
         ->name('user.orders.index');
     Route::get('/orders/{transaction}', [\App\Http\Controllers\User\OrderController::class, 'show'])
         ->name('user.orders.show');
         Route::delete('/orders/{transaction}', [\App\Http\Controllers\User\OrderController::class, 'destroy'])->name('user.orders.destroy');
 });
-
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/mycanteen');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::get('/email/verify', function () {
-    return view('mycanteen');
-})->middleware('auth')->name('verification.notice');
-
-
-Route::get('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
-
 
