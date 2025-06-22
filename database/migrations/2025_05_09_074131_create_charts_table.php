@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string("quantity");
             $table->integer("total");
             $table->timestamps();
-            $table->foreign('menu_id')->references('id')->on('Menus');
-            $table->foreign('user_id')->references('id')->on('Users');
-            $table->foreign('transaksi_id')->references('id')->on('Transaksis');
+            $table->foreign('menu_id')->references('id')->on('menus');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('transaksi_id')->references('id')->on('transaksis');
 
         });
     }

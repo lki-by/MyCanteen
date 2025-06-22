@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp("tanggal");
             $table->string("status");
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('Users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
