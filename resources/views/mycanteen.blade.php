@@ -28,14 +28,14 @@
 
 <body class="bg-gray-100 font-sans text-gray-800">
 
-  <nav class="sticky top-0 z-50 flex flex-col sm:flex-row items-center justify-between p-4 bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg">
-    <div class="flex items-center space-x-2 w-full sm:w-auto justify-between sm:justify-start mb-3 sm:mb-0">
-      <div class="flex items-center space-x-2">
-        <img src="{{ asset('logo/Logo.png') }}" alt="MyCanteen" class="w-10 h-10 sm:w-12 sm:h-12">
-        <h1 class="text-lg sm:text-xl font-bold">MyCanteen</h1>
-      </div>
+  <nav class="sticky top-0 z-50 bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg">
+  <div class="relative flex items-center justify-between p-4 sm:flex-row flex-col sm:items-center">
+    <div class="flex items-center space-x-2">
+      <img src="{{ asset('logo/Logo.png') }}" alt="MyCanteen" class="w-10 h-10 sm:w-12 sm:h-12">
+      <h1 class="text-lg sm:text-xl font-bold">MyCanteen</h1>
     </div>
 
+    <!-- Search (only visible on sm+) -->
     <div class="hidden sm:block sm:flex-1 sm:max-w-xl mx-4 relative">
       <input type="text" id="search-input" class="w-full py-2 px-4 rounded-full bg-white bg-opacity-90 focus:bg-white focus:ring-2 focus:ring-white focus:ring-opacity-30 text-black" placeholder="Cari menu makanan...">
       <button class="absolute right-1 top-1/2 transform -translate-y-1/2 bg-red-500 rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600">
@@ -43,10 +43,11 @@
       </button>
     </div>
 
-    <div class="flex items-center space-x-4 sm:space-x-6">
-
+    <!-- Profile & Cart Button -->
+    <div class="absolute right-4 top-4 sm:static sm:mt-0 flex items-center space-x-4 sm:space-x-6">
+      <!-- Profile Button -->
       <div class="relative">
-        <button onclick="toggleProfileDropdown()" class="flex items-center space-x-2 hover:translate-y-[-2px] transition-transform focus:outline-none">
+        <button onclick="toggleProfileDropdown()" class="flex items-center space-x-2 focus:outline-none">
           <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border-2 border-white shadow-md overflow-hidden">
             <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&color=7F9CF5&background=EBF4FF' }}"
                  alt="Avatar" class="w-full h-full object-cover">
@@ -71,12 +72,14 @@
         </div>
       </div>
 
+      <!-- Cart Button -->
       <button onclick="openCart()" class="relative hover:translate-y-[-2px] transition-transform">
         <i class="fas fa-shopping-cart text-lg sm:text-xl"></i>
         <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
       </button>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- Category Filter - Perbaikan untuk mobile -->
   <div class="flex flex-wrap gap-2 sm:gap-4 my-3 sm:my-5 px-2 sm:px-4 justify-center" id="categoryFilter">
